@@ -1,0 +1,55 @@
+#include <iostream>
+#include <cmath>
+#include <clocale>
+using namespace std;
+struct Complex
+{
+    float real;
+    float image;
+};
+
+Complex operator+ (Complex& f1,Complex& f2)
+{
+    Complex t;
+    t.real=f1.real + f2.real;
+    t.image=f1.image + f2.image;
+    return t;
+};
+Complex operator* (Complex& f1, Complex& f2)
+{
+    float i, j;
+    i = f1.real * f2.real - f1.image * f2.image;
+    j = f1.real * f2.image + f2.real * f1.image;
+    f1.real = i;
+    f1.image = j;
+    return f1;
+}
+ostream& operator<< (ostream& fo, const Complex& fp)
+{
+    if (fp.image == 0) fo << fp.real << " ";
+    else if (fp.image < 0) fo << fp.real << "+i(" << fp.image << ")\n";
+    else fo << fp.real << "+i" << fp.image << "\n";
+
+    return fo;
+}
+
+istream& operator>>(istream& fi, Complex& fp)
+{
+    fi >> fp.real;
+    fi >> fp.image;
+    return fi;
+}
+
+int main()
+{
+    Complex f1, f2;
+    setlocale(LC_ALL, "Rus");
+    cout << "1 число, введите действительную и мнимую части через пробел: ";
+    cin >> f1;
+    cout << "2 число, введите действительную и мнимую части через пробел: ";
+    cin >> f2;
+    cout << "c1 + c2 = " << f1 + f2;
+    cout << "c1 * c2 = " << f1 * f2;
+    system("pause");
+    return 0;
+}
